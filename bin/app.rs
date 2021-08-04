@@ -13,7 +13,7 @@ impl Printer {
         println!("{}", "| ---- | ---- | ---------- | ------ | -------- | ------ | ---------- | ------ | :----- |");
     }
 
-    fn print_rows(table: &GTable, grid_name: &str, grid: f32, mut index: u32) {
+    fn print_rows(table: &GTable, color:&str, grid_name: &str, grid: f32, mut index: u32) {
         let mut gear = 1.0;
         let lowest_gear = 0.3;
         while gear > lowest_gear {
@@ -21,15 +21,16 @@ impl Printer {
             if row.gear < lowest_gear {
                 break;
             }
-            Printer::print_row(row, grid_name, grid);
+            Printer::print_row(row, color, grid_name, grid);
             index += 1;
             gear -= grid;
         }
     }
 
-    fn print_row(row: GRow, grid_name: &str, grid: f32) {
+    fn print_row(row: GRow, color:&str, grid_name: &str, grid: f32) {
         println!(
-            "| {} | {:.2} | {:.3} | {:.3} | {} | {} | {:.3} | {:.3} | {} |",
+            "|<span style=\"color:{}\"> {} </span>| {:.2} | {:.3} | {:.3} | {} | {} | {:.3} | {:.3} | {} |",
+            color,
             grid_name,
             row.gear,
             row.buy_trigger_price(),
@@ -52,9 +53,9 @@ fn main() -> Result<(), Box<dyn Error>> {
         let table: GTable = GTable::new(&config);
 
         Printer::print_header(&table.code, &table.name);
-        Printer::print_rows(&table, "小网", config.small_grid, 0);
-        Printer::print_rows(&table, "中网", config.medium_grid, 1);
-        Printer::print_rows(&table, "大网", config.large_grid, 1);
+        Printer::print_rows(&table, "black", "小网", config.small_grid, 0);
+        Printer::print_rows(&table, "blue", "中网", config.medium_grid, 1);
+        Printer::print_rows(&table, "green", "大网", config.large_grid, 1);
         println!("\n");
     }
     Ok(())
