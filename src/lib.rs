@@ -98,6 +98,7 @@ impl GRow {
 fn round_100() {
     assert_eq!(1000.0, GTable::round_100(1001.0));
     assert_eq!(1000.0, GTable::round_100(1000.0));
+    assert_eq!(1000.0, GTable::round_100(999.99));
     assert_eq!(1000.0, GTable::round_100(999.0));
     assert_eq!(1000.0, GTable::round_100(950.0));
     assert_eq!(900.0, GTable::round_100(949.0));
