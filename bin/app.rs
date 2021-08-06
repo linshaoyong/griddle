@@ -13,7 +13,7 @@ impl Printer {
         println!("{}", "| ---- | ---- | ---------- | ------ | -------- | ------ | ---------- | ------ | :----- |");
     }
 
-    fn print_rows(table: &GTable, color:&str, grid_name: &str, grid: f32, mut index: u32) {
+    fn print_rows(table: &GTable, color: &str, grid_name: &str, grid: f32, mut index: u32) {
         let mut gear = 1.0;
         let lowest_gear = 0.3;
         while gear > lowest_gear {
@@ -27,7 +27,7 @@ impl Printer {
         }
     }
 
-    fn print_row(row: GRow, color:&str, grid_name: &str, grid: f32) {
+    fn print_row(row: GRow, color: &str, grid_name: &str, grid: f32) {
         println!(
             "|<span style=\"color:{}\"> {} </span>| {:.2} | {:.3} | {:.3} | {} | {} | {:.3} | {:.3} | {} |",
             color,

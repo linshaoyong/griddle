@@ -29,7 +29,7 @@ pub struct GRow {
 trait Rounder {
     fn round_100(input: f32) -> f32 {
         if input.round() as usize % 100 == 0 {
-            return input;
+            return input.round();
         } else {
             return (input / 100.0).round() * 100.0;
         }
