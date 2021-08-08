@@ -15,7 +15,7 @@ impl Printer {
 
     fn print_rows(table: &GTable, color: &str, grid_name: &str, grid: f32, mut index: u32) {
         let mut gear = 1.0;
-        let lowest_gear = 0.3;
+        let lowest_gear = 0.4;
         while gear > lowest_gear {
             let row = table.nth_row(index, grid);
             if row.gear < lowest_gear {
