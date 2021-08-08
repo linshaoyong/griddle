@@ -12,9 +12,9 @@ pub struct GTableConfig {
 }
 
 #[derive(Debug)]
-pub struct GTable {
-    pub name: String,
-    pub code: String,
+pub struct GTable<'a> {
+    pub name: &'a str,
+    pub code: &'a str,
     pub start_price: f32,
     pub start_numbers: f32,
 }
@@ -36,13 +36,13 @@ trait Rounder {
     }
 }
 
-impl Rounder for GTable {}
+impl Rounder for GTable<'_> {}
 
-impl GTable {
-    pub fn new(config: &GTableConfig) -> GTable {
+impl<'a> GTable<'a> {
+    pub fn new(config: &'a GTableConfig) -> GTable<'a> {
         GTable {
-            name: config.name.clone(),
-            code: config.code.clone(),
+            name: &config.name,
+            code: &config.code,
             start_price: config.start_price,
             start_numbers: config.start_numbers,
         }
