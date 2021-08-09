@@ -67,8 +67,7 @@ impl<'a> Printer<'a> {
 
     fn print(&mut self) {
         self.rows
-            .sort_by(|a, b| a.0.buy_price.partial_cmp(&b.0.buy_price).unwrap());
-
+            .sort_by(|a, b| b.0.buy_price.partial_cmp(&a.0.buy_price).unwrap());
         for (key, row) in &self.rows {
             self.print_row(key, row);
         }
