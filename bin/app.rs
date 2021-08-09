@@ -18,7 +18,7 @@ impl<'a> Printer<'a> {
     fn print_header(name: &str, code: &str) {
         println!("#### {}（{}）", code, name);
         println!("\n");
-        println!("{}", "| 种类 | 档位 | 买入触发价 | 买入价 | 买入金额 | 入股数 | 卖出触发价 | 卖出价 | 出股数 |");
+        println!("{}", "| 种类 | 档位 | 买入触发价 | 买入价 | 入股数 | 买入金额 | 卖出触发价 | 卖出价 | 出股数 |");
         println!("{}", "| ---- | ---- | ---------- | ------ | -------- | ------ | ---------- | ------ | :----- |");
     }
 
@@ -57,8 +57,8 @@ impl<'a> Printer<'a> {
             row.gear,
             row.buy_trigger_price(),
             row.buy_price,
-            row.buy_money() as u32,
             row.buy_numbers as u32,
+            row.buy_money() as u32,
             row.sell_trigger_price(key.grid),
             row.sell_price(key.grid),
             row.sell_numbers(key.grid) as u32,
