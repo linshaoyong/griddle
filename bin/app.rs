@@ -3,9 +3,18 @@ use std::fs::File;
 
 use griddle::{GRow, GTable, GTableConfig};
 
-struct Printer;
+struct PrintKey<'a> {
+    buy_price: f32,
+    color: &'a str,
+    grid_name: &'a str,
+    grid: f32,
+}
 
-impl Printer {
+struct Printer<'a> {
+    rows: Vec<(PrintKey<'a>, GRow)>,
+}
+
+impl<'a> Printer<'a> {
     fn print_header(name: &str, code: &str) {
         println!("#### {}（{}）", code, name);
         println!("\n");
@@ -13,7 +22,14 @@ impl Printer {
         println!("{}", "| ---- | ---- | ---------- | ------ | -------- | ------ | ---------- | ------ | :----- |");
     }
 
-    fn print_rows(table: &GTable, color: &str, grid_name: &str, grid: f32, mut index: u32) {
+    fn add_rows(
+        &mut self,
+        table: &'a GTable,
+        color: &'a str,
+        grid_name: &'a str,
+        grid: f32,
+        mut index: u32,
+    ) {
         let mut gear = 1.0;
         let lowest_gear = 0.4;
         while gear > lowest_gear {
@@ -21,26 +37,41 @@ impl Printer {
             if row.gear < lowest_gear {
                 break;
             }
-            Printer::print_row(row, color, grid_name, grid);
+            let key = PrintKey {
+                buy_price: row.buy_price,
+                color: color,
+                grid_name: grid_name,
+                grid: grid,
+            };
+            self.rows.push((key, row));
             index += 1;
             gear -= grid;
         }
     }
 
-    fn print_row(row: GRow, color: &str, grid_name: &str, grid: f32) {
+    fn print_row(&self, key: &PrintKey, row: &GRow) {
         println!(
             "|<span style=\"color:{}\"> {} </span>| {:.2} | {:.3} | {:.3} | {} | {} | {:.3} | {:.3} | {} |",
-            color,
-            grid_name,
+            key.color,
+            key.grid_name,
             row.gear,
             row.buy_trigger_price(),
             row.buy_price,
             row.buy_money() as u32,
             row.buy_numbers as u32,
-            row.sell_trigger_price(grid),
-            row.sell_price(grid),
-            row.sell_numbers(grid) as u32,
+            row.sell_trigger_price(key.grid),
+            row.sell_price(key.grid),
+            row.sell_numbers(key.grid) as u32,
         );
+    }
+
+    fn print(&mut self) {
+        self.rows
+            .sort_by(|a, b| a.0.buy_price.partial_cmp(&b.0.buy_price).unwrap());
+
+        for (key, row) in &self.rows {
+            self.print_row(key, row);
+        }
     }
 }
 
@@ -52,10 +83,13 @@ fn main() -> Result<(), Box<dyn Error>> {
         let config: GTableConfig = result?;
         let table: GTable = GTable::new(&config);
 
+        let mut printer = Printer { rows: vec![] };
         Printer::print_header(&table.code, &table.name);
-        Printer::print_rows(&table, "black", "小网", config.small_grid, 0);
-        Printer::print_rows(&table, "blue", "中网", config.medium_grid, 1);
-        Printer::print_rows(&table, "green", "大网", config.large_grid, 1);
+        printer.add_rows(&table, "black", "小网", config.small_grid, 0);
+        printer.add_rows(&table, "blue", "中网", config.medium_grid, 1);
+        printer.add_rows(&table, "green", "大网", config.large_grid, 1);
+
+        printer.print();
         println!("\n");
     }
     Ok(())
