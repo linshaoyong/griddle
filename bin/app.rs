@@ -22,7 +22,7 @@ impl<'a> Printer<'a> {
         println!("{}", "| ---- | ---- | ---------- | ------ | -------- | ------ | ---------- | ------ | :----- |");
     }
 
-    fn add_rows(
+    fn gen_rows(
         &mut self,
         table: &'a GTable,
         color: &'a str,
@@ -84,9 +84,9 @@ fn main() -> Result<(), Box<dyn Error>> {
 
         let mut printer = Printer { rows: vec![] };
         Printer::print_header(&table.code, &table.name);
-        printer.add_rows(&table, "black", "小网", config.small_grid, 0);
-        printer.add_rows(&table, "blue", "中网", config.medium_grid, 1);
-        printer.add_rows(&table, "green", "大网", config.large_grid, 1);
+        printer.gen_rows(&table, "black", "小网", config.small_grid, 0);
+        printer.gen_rows(&table, "blue", "中网", config.medium_grid, 1);
+        printer.gen_rows(&table, "green", "大网", config.large_grid, 1);
 
         printer.print();
         println!("\n");
