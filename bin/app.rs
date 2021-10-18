@@ -51,7 +51,7 @@ impl<'a> Printer<'a> {
 
     fn print_row(&self, key: &PrintKey, row: &GRow) {
         println!(
-            "|<span style=\"color:{}\"> {} </span>| {:.2} | {:.3} | {:.3} | {} | {} | {:.3} | {:.3} | {} |",
+            "|<span style=\"color:{}\"> {} </span>| {:.3} | {:.3} | {:.3} | {} | {} | {:.3} | {:.3} | {} |",
             key.color,
             key.grid_name,
             row.gear,
