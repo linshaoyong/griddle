@@ -86,7 +86,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         Printer::print_header(&table.code, &table.name);
         printer.gen_rows(&table, "black", "小网", config.small_grid, 0);
         printer.gen_rows(&table, "blue", "中网", config.medium_grid, 1);
-        printer.gen_rows(&table, "green", "大网", config.large_grid, 1);
+        printer.gen_rows(&table, "red", "大网", config.large_grid, 1);
 
         printer.print();
         println!("\n");
