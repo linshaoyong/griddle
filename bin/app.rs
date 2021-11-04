@@ -31,7 +31,7 @@ impl<'a> Printer<'a> {
         mut index: u32,
     ) {
         let mut gear = 1.0;
-        let lowest_gear = 0.4;
+        let lowest_gear = 0.5;
         while gear > lowest_gear {
             let row = table.nth_row(index, grid);
             if row.gear < lowest_gear {
