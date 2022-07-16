@@ -39,9 +39,9 @@ impl<'a> Printer<'a> {
             }
             let key = PrintKey {
                 buy_price: row.buy_price,
-                color: color,
-                grid_name: grid_name,
-                grid: grid,
+                color,
+                grid_name,
+                grid,
             };
             self.rows.push((key, row));
             index += 1;
