@@ -16,7 +16,7 @@ struct Printer<'a> {
 
 impl<'a> Printer<'a> {
     fn print_header(name: &str, code: &str) {
-        println!("#### {}（{}）", code, name);
+        println!("#### {}({})", code, name);
         println!("\n");
         println!("{}", "| 种类 | 档位 | 买入触发价 | 买入价 | 入股数 | 买入金额 | 卖出触发价 | 卖出价 | 出股数 |");
         println!("{}", "| ---- | ---- | ---------- | ------ | -------- | ------ | ---------- | ------ | :----- |");
