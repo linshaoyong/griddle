@@ -55,7 +55,7 @@ impl<'a> GTable<'a> {
 
         GRow {
             gear: 1.0 - n as f32 * grid,
-            buy_price: buy_price,
+            buy_price,
             buy_numbers: GTable::round_100(buy_numbers),
         }
     }
